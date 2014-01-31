@@ -90,6 +90,13 @@ var _ = { };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var unique = {};
+
+    _.each(array, function(value) {
+      unique[value] = undefined;
+    });
+
+    return Object.keys(unique);
   };
 
 
