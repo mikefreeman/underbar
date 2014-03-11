@@ -107,9 +107,9 @@ var _ = { };
     // the members, it also maintains an array of results.
     var result = [];
 
-    for (var i = 0; i < array.length; i++) {
-      result.push(iterator(array[i], i, array));
-    }
+    _.each(array, function(value) {
+      result.push(iterator(value));
+    });
 
     return result;
   };
