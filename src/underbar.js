@@ -371,12 +371,14 @@ var _ = { };
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
     var result = [];
+    var max = Math.max.apply(Math, Array.prototype.map.call(arguments, function(value) {
+      return value.length; }));
 
-    for (var i = 0; i < arguments[0].length; i++) {
+    for (var i = 0; i < max; i++) {
       result[i] = [];
-      for (var j = 0; j < arguments.length; j++) {
-        result[i].push(arguments[j][i]);
-      }
+      _.each(arguments, function(arg, index) {
+        result[i].push(arg[i]);
+      });
     }
 
     return result;
