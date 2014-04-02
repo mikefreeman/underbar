@@ -444,6 +444,29 @@ var _ = { };
   //
   // See the Underbar readme for details.
   _.throttle = function(func, wait) {
+    var lastCalled = 0;
+    var timeRemaining;
+    var result;
+    var timeout;
+
+    return function() {
+      var currentTime = new Date().getTime();
+      timeRemaining = wait - (currentTime - lastCalled);
+
+      if (timeRemaining <= 0) {
+        clearTimeout(timeout);
+        timeout = null;
+        lastCalled = currentTime;
+        result = func.apply(this, arguments);
+      } else if (!timeout) {
+        timeout = setTimeout(function() {
+          lastCalled = new Date().getTime();
+          result = func.apply(this, arguments);
+        }, timeRemaining);
+      }
+
+      return result;
+    }
   };
 
 }).call(this);
